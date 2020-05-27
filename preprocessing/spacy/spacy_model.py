@@ -10,7 +10,7 @@ import pt_core_news_sm as pt_spacy
 #! python -m spacy download pt_core_news_sm
 
 
-pandarallel.initialize(use_memory_fs=False, progress_bar=False, nb_workers=15)
+pandarallel.initialize(use_memory_fs=False, progress_bar=True, nb_workers=15)
 tqdm.pandas()
 
 
@@ -107,7 +107,7 @@ class SpacyModel():
             print('Starting new batch')
             prepared_batch = self.prepare_data(batch, language)
             self.save_fasttext_input_file(prepared_batch, output_path)
-
+            del(batch)
         print('All batches processed successfully')
 
     def transform(self, language, output_path, batch_proc=True):
@@ -123,7 +123,6 @@ class SpacyModel():
             prepared_data = self.prepare_data(selected_data, language, parallel=False)
 
             self.save_fasttext_input_file(prepared_data, output_path)
-
 
 if __name__ == '__main__':
     output_spanish_path = 'melifasttext_span_input.csv'

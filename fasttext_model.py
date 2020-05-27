@@ -22,9 +22,11 @@ class FasttextModel():
         model = fasttext.train_supervised(data_path, **kwargs)
         self.models[language] = model
 
-    def fit(self, span_data_path, port_data_path):
-        self._train_unilanguage_model(span_data_path, 'spanish')
-        self._train_unilanguage_model(port_data_path, 'portuguese')
+    def fit(self, span_data_path=None, port_data_path=None):
+        if span_data_path:
+            self._train_unilanguage_model(span_data_path, 'spanish')
+        if port_data_path:
+            self._train_unilanguage_model(port_data_path, 'portuguese')
 
     def predict(self, title, language, k=1):
         try:
